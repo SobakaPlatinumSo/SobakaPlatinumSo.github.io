@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Отзыв</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      min-height: 100vh;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 360px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 500;
+      text-align: center;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .btn:active { opacity: 0.85; }
+
+    .yandex { background: #fc3f1d; }
+    .twogis { background: #00a0df; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- Яндекс -->
+    <a class="btn yandex" href="https://google.com" target="_blank" rel="noopener">Яндекс Карты</a>
+    <!-- 2ГИС -->
+    <a class="btn twogis" href="https://google.com" target="_blank" rel="noopener">2ГИС</a>
+  </div>
+</body>
+</html>
