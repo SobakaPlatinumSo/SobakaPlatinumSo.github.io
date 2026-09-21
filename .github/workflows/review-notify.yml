@@ -1,0 +1,38 @@
+name: Уведомления об отзывах в Telegram
+
+on:
+  schedule:
+    # каждые 10 минут (минимальный шаг cron в GitHub Actions — 5 минут)
+    - cron: "*/10 * * * *"
+  # чтобы можно было запустить вручную: Actions -> Run workflow
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Проверить почту и отправить в Telegram
+        env:
+          IMAP_HOST: ${{ secrets.IMAP_HOST }}
+          IMAP_USER: ${{ secrets.IMAP_USER }}
+          IMAP_PASS: ${{ secrets.IMAP_PASS }}
+          TG_TOKEN: ${{ secrets.TG_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+          SUBJECT_FILTER: ${{ secrets.SUBJECT_FILTER }}
+        run: python3 bot/check_reviews.py
+
+      - name: Сохранить состояние (чтобы не слать письма повторно)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add bot/state/last_uid.txt 2>/dev/null || true
+          if ! git diff --cached --quiet; then
+            git commit -m "bot: обновить состояние проверки писем"
+            git push
+          fi
